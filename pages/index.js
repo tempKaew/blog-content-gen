@@ -63,7 +63,10 @@ export default function Home() {
           <label htmlFor="content">this result</label>
           <textarea id="result" name="result"></textarea>
 
-          <button type="submit">Submit</button>
+          <div>
+            <button type="reset">Reset</button>
+            <button type="submit">Submit</button>
+          </div>
         </form>
         
       </main>
