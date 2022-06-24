@@ -8,34 +8,63 @@ export default function Home() {
     event.preventDefault()
 
     var content = event.target.content.value
+    var onlyNewLine = event.target.onlyNewLine.checked
 
     if (content) {
-      const searchRegExp = /<div class="separator" style="clear: both;"><a.*><img/g;
-      const replaceWith = '<img';
-      const result = content.replace(searchRegExp, replaceWith);
+      const result = content
 
-      searchRegExp = /<\/a><\/div>/g;
-      replaceWith = '';
-      result = result.replace(searchRegExp, replaceWith);
+      if (onlyNewLine) {
 
-      searchRegExp = /" src="/g;
-      replaceWith = '" width="100%" src="';
-      result = result.replace(searchRegExp, replaceWith);
+        const searchRegExp = /<div class="separator" style="clear: both;">/gu;
+        const replaceWith = '\n<div class="separator" style="clear: both;">';
+        result = result.replace(searchRegExp, replaceWith);
 
-      searchRegExp = /s1600/g;
-      replaceWith = '-rw';
-      result = result.replace(searchRegExp, replaceWith);
+        searchRegExp = /<div class="separator" style="clear: both;"><a.*><img/g;
+        replaceWith = '<img';
+        result = result.replace(searchRegExp, replaceWith);
 
-      searchRegExp = /<iframe width=".*" height/g;
-      replaceWith = '<iframe height';
-      result = result.replace(searchRegExp, replaceWith);
+        searchRegExp = /<\/a><\/div>/g;
+        replaceWith = '';
+        result = result.replace(searchRegExp, replaceWith);
 
-      var lines = result.split("\n");
-      for(var i=0; i<lines.length; i++) {
-        lines[i] = "<p>" + lines[i] + "</p>";
+        searchRegExp = /0" src="/g;
+        replaceWith = '" width="100%" src="';
+        result = result.replace(searchRegExp, replaceWith);
+
+        searchRegExp = /s1600/g;
+        replaceWith = '-rw';
+        result = result.replace(searchRegExp, replaceWith);
+
+      }else{
+        const searchRegExp = /<div class="separator" style="clear: both;"><a.*><img/g;
+        const replaceWith = '<img';
+        result = result.replace(searchRegExp, replaceWith);
+
+        searchRegExp = /<\/a><\/div>/g;
+        replaceWith = '';
+        result = result.replace(searchRegExp, replaceWith);
+
+        searchRegExp = /0" src="/g;
+        replaceWith = '" width="100%" src="';
+        result = result.replace(searchRegExp, replaceWith);
+
+        searchRegExp = /s1600/g;
+        replaceWith = '-rw';
+        result = result.replace(searchRegExp, replaceWith);
+
+        searchRegExp = /<iframe width=".*" height/g;
+        replaceWith = '<iframe height';
+        result = result.replace(searchRegExp, replaceWith);
+
+        var lines = result.split("\n");
+        for(var i=0; i<lines.length; i++) {
+          lines[i] = (lines[i]) ? "<p>" + lines[i] + "</p>" : '';
+        }
+
+        result = lines.join("\n");
       }
 
-      result = lines.join("\n");
+      result = result.replace(/^\s*[\r\n]/gm, '') //remove empty line
 
       event.target.result.value = result
     }
@@ -62,6 +91,11 @@ export default function Home() {
 
           <label htmlFor="content">this result</label>
           <textarea id="result" name="result"></textarea>
+
+          <div className={styles.mb15}>
+            <label htmlFor="content">gen new line photo</label>
+            <input type="checkbox" id="onlyNewLine" name="onlyNewLine"/>
+          </div>
 
           <div>
             <button type="reset">Reset</button>
