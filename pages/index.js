@@ -66,6 +66,15 @@ export default function Home() {
 
       result = result.replace(/^\s*[\r\n]/gm, '') //remove empty line
 
+      if (onlyNewLine) {
+        //add space line
+        var lines = result.split("\n");
+        for(var i=0; i<lines.length; i++) {
+          lines[i] = lines[i] + "\n"
+        }
+        result = lines.join("\n");
+      }
+
       event.target.result.value = result
     }
 
