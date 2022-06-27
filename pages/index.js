@@ -53,7 +53,7 @@ export default function Home() {
         result = result.replace(searchRegExp, replaceWith);
 
         searchRegExp = /<iframe width=".*" height/g;
-        replaceWith = '<iframe height';
+        replaceWith = '<iframe width="100%" height';
         result = result.replace(searchRegExp, replaceWith);
 
         var lines = result.split("\n");
